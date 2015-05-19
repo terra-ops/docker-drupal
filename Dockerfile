@@ -3,10 +3,12 @@
 FROM php:5.5-apache
 
 RUN a2enmod rewrite
+RUN apt-get update
+RUN apt-get install git -y
 
 # Install Composer
-RUN curl -sS https://getcomposer.org/installer | php
-RUN mv composer.phar /usr/local/bin/composer
+RUN curl https://getcomposer.org/download/1.0.0-alpha10/composer.phar  > /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
 
 # Install Drush
 RUN composer global require drush/drush:dev-master
