@@ -15,4 +15,13 @@ COPY www.conf /etc/php5/fpm/pool.d/www.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY php.ini /etc/php5/fpm/php.ini
 
-CMD service nginx start && service php5-fpm start && tail -f /var/log/php5-fpm.log 
+# Allow NGINX UID and GID to be set at runtime so we can pass in environment variables.
+ENV HOST_UID 200
+ENV HOST_GID 200
+
+CMD \
+  usermod -u $HOST_UID nginx && \
+  groupmod -g $HOST_GID nginx && \
+  service nginx start && \
+  service php5-fpm start && \
+  tail -f /var/log/php5-fpm.log
