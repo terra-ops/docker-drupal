@@ -20,8 +20,9 @@ ENV HOST_UID 200
 ENV HOST_GID 200
 
 CMD \
-  usermod -u $HOST_UID nginx && \
-  groupmod -g $HOST_GID nginx && \
+# Commenting out until we can guarantee it works. Troubl e on Macs.
+#  usermod -u $HOST_UID nginx && \
+#  groupmod -g $HOST_GID nginx && \
   service nginx start && \
   service php5-fpm start && \
   tail -f /var/log/php5-fpm.log
