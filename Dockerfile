@@ -4,7 +4,8 @@ MAINTAINER Jon Pugh <jon@thinkdrop.net>
 
 EXPOSE 80
 
-VOLUME /usr/share/nginx/html/
+# VOLUME /usr/share/nginx/html/
+VOLUME /app
 
 RUN  apt-get update
 RUN  apt-get install -y git php5-fpm php5-gd php5-mysql nano php5-dev php5-cli php-pear
@@ -23,6 +24,8 @@ CMD \
 # Commenting out until we can guarantee it works. Troubl e on Macs.
 #  usermod -u $HOST_UID nginx && \
 #  groupmod -g $HOST_GID nginx && \
+  rm -rf /var/www && \
+  ln -s /app/$DOCUMENT_ROOT /var/www && \
   service nginx start && \
   service php5-fpm start && \
   tail -f /var/log/php5-fpm.log
