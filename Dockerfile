@@ -8,7 +8,16 @@ EXPOSE 80
 VOLUME /app
 
 RUN  apt-get update
-RUN  apt-get install -y git php5-fpm php5-gd php5-mysql nano php5-dev php5-cli php-pear
+RUN  apt-get install -y \ 
+    git \
+    php5-fpm \
+    php5-gd \
+    php5-mysql \
+    nano \
+    php5-dev \
+    php5-cli \
+    php-pear \
+    php5-curl
 RUN  pecl install mongo
 
 COPY drupal.conf /etc/nginx/conf.d/default.conf
