@@ -17,7 +17,8 @@ RUN  apt-get install -y \
     php5-dev \
     php5-cli \
     php-pear \
-    php5-curl
+    php5-curl \
+    postfix
 RUN  pecl install mongo
 
 COPY drupal.conf /etc/nginx/conf.d/default.conf
