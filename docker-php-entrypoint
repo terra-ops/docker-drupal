@@ -14,6 +14,19 @@ echo $HOST_GID
 adduser --uid $HOST_UID --gid $HOST_GID --system --no-create-home --home /var/www/html terra
 adduser terra www-data
 
+# Returns true once mysql can connect.
+# Thanks to http://askubuntu.com/questions/697798/shell-script-how-to-run-script-after-mysql-is-ready
+mysql_ready() {
+    echo "Trying to connect to $DATABASE_ENV_MYSQL_USER:$DATABASE_ENV_MYSQL_PASSWORD@database ..."
+    mysqladmin ping --host=database --user=$DATABASE_ENV_MYSQL_USER --password=$DATABASE_ENV_MYSQL_PASSWORD  # > /dev/null 2>&1
+}
+
+while !(mysql_ready)
+do
+   sleep 3
+   echo "Waiting for database host to be ready..."
+done
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- apache2-foreground "$@"
